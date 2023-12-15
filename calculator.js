@@ -7,6 +7,7 @@ let numberButtons = document.querySelectorAll(".number");
 let operatorButtons = document.querySelectorAll(".operator");
 let calculateButton = document.querySelector(".calculate");
 let clearButton = document.querySelector(".clear");
+let displayScreen = document.querySelector(".display");
 
 let calculateString = "";
 
@@ -14,11 +15,15 @@ let calculateString = "";
 numberButtons.forEach((btn) => {
   btn.addEventListener("click", function () {
     if (Operator === "" && secondOperand === 0 && thirdOperand === 0) {
-      firstOperand += this.value;
+      if (firstOperand === 0) {
+        firstOperand = this.value;
+      } else firstOperand += this.value;
       console.log(firstOperand);
+      displayScreen.textContent = firstOperand;
     } else if (Operator !== "" && firstOperand !== 0 && thirdOperand === 0) {
       secondOperand += this.value;
       console.log(secondOperand);
+      displayScreen.textContent = secondOperand;
     } else if (
       Operator === "" &&
       (firstOperand === 0 || firstOperand !== 0) &&
@@ -27,6 +32,7 @@ numberButtons.forEach((btn) => {
     ) {
       firstOperand += this.value;
       console.log(firstOperand);
+      displayScreen.textContent = firstOperand;
     }
   });
 });
@@ -40,6 +46,7 @@ operatorButtons.forEach((btn) => {
       // sets up initial operator for calculations between first and second
       Operator += this.value;
       console.log(this.value);
+      displayScreen.textContent = Operator;
       secondOperand = 0;
     } else if (Operator !== "" && firstOperand !== 0 && secondOperand !== 0) {
       // finds result with the first set operand and second set operand
@@ -50,6 +57,7 @@ operatorButtons.forEach((btn) => {
       );
       console.log(Operator);
       console.log(result);
+      displayScreen.textContent = result;
       thirdOperand = result;
       firstOperand = 0;
       secondOperand = 0;
@@ -65,6 +73,7 @@ operatorButtons.forEach((btn) => {
       );
       console.log(Operator);
       console.log(result);
+      displayScreen.textContent = result;
       firstOperand = result;
       thirdOperand = 0;
       result = 0;
@@ -79,6 +88,7 @@ operatorButtons.forEach((btn) => {
           parseFloat(0)
         );
         console.log(result);
+        displayScreen.textContent = result;
       } else if (Operator === "*") {
         console.log(Operator);
         firstOperand *= firstOperate(
@@ -87,6 +97,7 @@ operatorButtons.forEach((btn) => {
           parseFloat(1)
         );
         console.log(firstOperand);
+        displayScreen.textContent = firstOperand;
       }
     }
   });
@@ -101,6 +112,7 @@ calculateButton.addEventListener("click", function () {
       parseFloat(secondOperand)
     );
     console.log(result);
+    displayScreen.textContent = result;
     thirdOperand = result;
     firstOperand = 0;
     secondOperand = 0;
@@ -114,6 +126,7 @@ clearButton.addEventListener("click", function () {
   secondOperand = 0;
   thirdOperand = 0;
   Operator = "";
+  displayScreen.textContent = firstOperand;
   console.clear();
 });
 
@@ -166,4 +179,3 @@ function secondOperate(num1, operate, num2) {
   if (operate === multiplyOperator) return secondMultiply(num1, num2);
   if (operate === divideOperator) return secondDivide(num1, num2);
 }
-
